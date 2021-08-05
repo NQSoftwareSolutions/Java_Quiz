@@ -3,4 +3,6 @@
     <string name="Q1">Java is a low level programming language.</string>
     <string name="aTrue">True</string>
     <string name="aFalse">False</string>
+    <string name="correct">Correct</string>
+    <string name="notCorrect">Not Correct</string>
 </resources>
