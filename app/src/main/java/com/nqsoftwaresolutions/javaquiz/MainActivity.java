@@ -39,8 +39,16 @@ public class MainActivity extends AppCompatActivity {
 
         //Todo Get reference of Question text view & assign it text on current index
         mQuestionTextView = findViewById(R.id.id_txt_question);
-        int question = mQuestionsBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
+        updateQuestion();
+
+        //Todo update question & index with click
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+               updateQuestion();
+            }
+        });
 
         /**
          * Todo Challenge customize Toast
@@ -63,12 +71,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
-            }
-        });
-
+    private void updateQuestion() {
+        int question = mQuestionsBank[mCurrentIndex].getTextResId();
+        mQuestionTextView.setText(question);
     }
 }
