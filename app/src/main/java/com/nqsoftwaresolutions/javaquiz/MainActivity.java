@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             new Questions(R.string.java_fundamentals2,true),
             new Questions(R.string.java_fundamentals3,false),
             new Questions(R.string.java_fundamentals4,false),
-            new Questions(R.string.java_fundamentals5,true)
+            new Questions(R.string.java_fundamentals5,false)
     };
     private int mCurrentIndex = 0;
 
@@ -57,20 +57,29 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(MainActivity.this, R.string.notCorrect, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP,1,80);
-                toast.show();
+                checkAnswer(true);
             }
         });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(MainActivity.this, R.string.correct, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP,1,80);
-                toast.show();
+                checkAnswer(false);
             }
         });
 
+    }
+
+    private void checkAnswer(boolean b) {
+        boolean answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswerTrue();
+        int messageResId = 0;
+        if (b == answerIsTrue){
+            messageResId = R.string.correct;
+        }else {
+            messageResId = R.string.notCorrect;
+        }
+        Toast toast = Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP,1,80);
+        toast.show();
     }
 
     private void updateQuestion() {
