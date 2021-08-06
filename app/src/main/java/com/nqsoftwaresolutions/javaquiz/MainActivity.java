@@ -14,7 +14,7 @@ import com.nqsoftwaresolutions.javaquiz.DataModel.Questions;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mFalseButton, mTrueButton, mNextButton;
+    private Button mFalseButton, mTrueButton, mNextButton, mPreviousButton;
     private TextView mQuestionTextView;
     /**
      * Create a question array
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
         mNextButton = findViewById(R.id.id_btn_next);
+        mPreviousButton = findViewById(R.id.id_btn_previous);
 
         //Todo Get reference of Question text view & assign it text on current index
         mQuestionTextView = findViewById(R.id.id_txt_question);
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /**
-         * Todo Challenge customize Toast
+         * Todo Challenge 1.1 customize Toast
          * show Toast on top of the screen
          */
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /**
-         * Todo Challenge set listener on TextView
+         * Todo Challenge 2.1 set listener on TextView
          * we are going to create a event on Question text view so we can get next question
          * if we click on it
          */
@@ -77,6 +78,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
                 updateQuestion();
+            }
+        });
+
+        /**
+         * Todo Challenge 2.2 set previous button
+         * Create a new button & add listener on it
+         * Update index & question in backward when clicked
+         */
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentIndex == 0){
+                    Toast toast = Toast.makeText(MainActivity.this, "Your are on first Question", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP,1,80);
+                    toast.show();
+                }else {
+                    mCurrentIndex = (mCurrentIndex - 1) % mQuestionsBank.length;
+                    updateQuestion();
+                }
             }
         });
 
