@@ -67,6 +67,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Todo Challenge set listener on TextView
+         * we are going to create a event on Question text view so we can get next question
+         * if we click on it
+         */
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                updateQuestion();
+            }
+        });
+
     }
 
     private void checkAnswer(boolean b) {
