@@ -3,6 +3,7 @@ package com.nqsoftwaresolutions.javaquiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mFalseButton, mTrueButton;
     private ImageButton mNextImageButton, mPrevImageButton;
     private TextView mQuestionTextView;
+    private static final String TAG = "MainActivity";
     /**
      * Create a question array
      */
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG,"Activity Created....");
         setContentView(R.layout.activity_main);
 
         mFalseButton = findViewById(R.id.id_btn_false);
@@ -120,5 +123,35 @@ public class MainActivity extends AppCompatActivity {
     private void updateQuestion() {
         int question = mQuestionsBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "Activity Started...");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "Activity Resumed...");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "Activity paused...");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG,"Activity Stopped....");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"Activity Destroyed....");
     }
 }
