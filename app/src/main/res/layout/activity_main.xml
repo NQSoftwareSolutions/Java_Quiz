@@ -9,9 +9,11 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/id_txt_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Q1" />
+        android:padding="24dp"
+        />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,5 +32,10 @@
             android:text="@string/aFalse"
             />
     </LinearLayout>
-
+    <Button
+        android:id="@+id/id_btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        />
 </LinearLayout>
