@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +15,8 @@ import com.nqsoftwaresolutions.javaquiz.DataModel.Questions;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mFalseButton, mTrueButton, mNextButton, mPreviousButton;
+    private Button mFalseButton, mTrueButton;
+    private ImageButton mNextImageButton, mPrevImageButton;
     private TextView mQuestionTextView;
     /**
      * Create a question array
@@ -35,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
-        mNextButton = findViewById(R.id.id_btn_next);
-        mPreviousButton = findViewById(R.id.id_btn_previous);
+        mNextImageButton = findViewById(R.id.id_img_btn_next);
+        mPrevImageButton = findViewById(R.id.id_img_btn_pev);
 
         //Todo Get reference of Question text view & assign it text on current index
         mQuestionTextView = findViewById(R.id.id_txt_question);
         updateQuestion();
 
         //Todo update question & index with click
-        mNextButton.setOnClickListener(new View.OnClickListener() {
+        mNextImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
          * Create a new button & add listener on it
          * Update index & question in backward when clicked
          */
-        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+        mPrevImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCurrentIndex == 0){

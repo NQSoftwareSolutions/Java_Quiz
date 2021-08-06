@@ -10,5 +10,5 @@
     <string name="java_fundamentals3">Java is platform dependent language</string>
     <string name="java_fundamentals4">2 % 4 == 0</string>
     <string name="java_fundamentals5">Integer is data type in java</string>
-    <string name="previous">Previous</string>
+    <string name="previous">Prev</string>
 </resources>
