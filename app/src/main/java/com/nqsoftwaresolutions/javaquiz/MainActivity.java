@@ -1,8 +1,10 @@
 package com.nqsoftwaresolutions.javaquiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,7 +21,13 @@ public class MainActivity extends AppCompatActivity {
     private Button mFalseButton, mTrueButton;
     private ImageButton mNextImageButton, mPrevImageButton;
     private TextView mQuestionTextView;
+
     private static final String TAG = "MainActivity";
+
+    //Global variable with key to store state or value, when activity recreated by android
+    private static final String KEY_INDEX = "index";
+    private int mCurrentIndex = 0;
+
     /**
      * Create a question array
      */
@@ -30,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
             new Questions(R.string.java_fundamentals4,false),
             new Questions(R.string.java_fundamentals5,false)
     };
-    private int mCurrentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"Activity Created....");
         setContentView(R.layout.activity_main);
 
+        // Todo Check last state of activity
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
+        }
+
+        //Todo set reference to widgets
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
         mNextImageButton = findViewById(R.id.id_img_btn_next);
@@ -123,6 +136,18 @@ public class MainActivity extends AppCompatActivity {
     private void updateQuestion() {
         int question = mQuestionsBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+    }
+
+
+
+    /**
+     * Todo saving the state of activity
+     * override the onSaveInstanceState & onRestoreInstanceState
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
     @Override
