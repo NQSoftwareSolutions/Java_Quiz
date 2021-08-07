@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--Todo My custom Colors-->
+    <color name="red">#B71C1C</color>
+    <color name="blue">#1A237E</color>
+    <color name="green">#1B5E20</color>
+    <color name="light_red">#FFCDD2</color>
+    <color name="light_blue">#C5CAE9</color>
+    <color name="light_green">#C8E6C9</color>
 </resources>
