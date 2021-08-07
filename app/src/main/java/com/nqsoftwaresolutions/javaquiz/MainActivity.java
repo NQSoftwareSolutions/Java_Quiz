@@ -18,6 +18,7 @@ import com.nqsoftwaresolutions.javaquiz.DataModel.Questions;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Todo All global variables
     private Button mFalseButton, mTrueButton;
     private ImageButton mNextImageButton, mPrevImageButton;
     private TextView mQuestionTextView;
@@ -55,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton = findViewById(R.id.id_btn_true);
         mNextImageButton = findViewById(R.id.id_img_btn_next);
         mPrevImageButton = findViewById(R.id.id_img_btn_pev);
-
-        //Todo Get reference of Question text view & assign it text on current index
         mQuestionTextView = findViewById(R.id.id_txt_question);
+
         updateQuestion();
 
         //Todo update question & index with click
@@ -178,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
         int question = mQuestionsBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
-
-
 
     /**
      * Todo saving the state of activity
