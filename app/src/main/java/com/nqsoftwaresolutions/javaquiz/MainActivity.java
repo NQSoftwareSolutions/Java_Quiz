@@ -21,13 +21,20 @@ public class MainActivity extends AppCompatActivity {
     //Todo All global variables
     private Button mFalseButton, mTrueButton;
     private ImageButton mNextImageButton, mPrevImageButton;
-    private TextView mQuestionTextView;
+    private TextView mQuestionTextView, mRightAnswersTextView, mWrongAnswersTextView, mPercentageTextView;
 
     private static final String TAG = "MainActivity";
 
     //Global variable with key to store state or value, when activity recreated by android
     private static final String KEY_INDEX = "index";
+    private static final String KEY_FALSE = "isFalse";
+    private static final String KEY_TRUE = "isTrue";
+
+    private boolean answerIsTrue;
     private int mCurrentIndex = 0;
+    private boolean mTrueIsClicked, mFalseIsClicked;
+    //Variables for storing percentage, right & wrong answers.
+    private int mPercentage, mRightAnsCounter, mWrongAnsCounter;
 
     /**
      * Create a question array
@@ -51,11 +58,23 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton = findViewById(R.id.id_btn_true);
         mNextImageButton = findViewById(R.id.id_img_btn_next);
         mPrevImageButton = findViewById(R.id.id_img_btn_pev);
-        mQuestionTextView = findViewById(R.id.id_txt_question);
+        //mQuestionTextView = findViewById(R.id.id_txt_question);
+        mPercentageTextView = findViewById(R.id.id_txt_percentage);
+        mRightAnswersTextView = findViewById(R.id.id_txt_right_answers);
+        mWrongAnswersTextView = findViewById(R.id.id_txt_wrong_answers);
 
         // Todo Check last state of activity
         if (savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
+            mTrueIsClicked = savedInstanceState.getBoolean(KEY_TRUE);
+            mFalseIsClicked = savedInstanceState.getBoolean(KEY_FALSE);
+            if (mTrueIsClicked || mFalseIsClicked){
+                /**Todo Challenge 3.1 Prevent user from multiple answers
+                 * set clickable true
+                 */
+                mFalseButton.setClickable(true);
+                mTrueButton.setClickable(true);
+            }
         }
 
         updateQuestion();
@@ -69,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.TOP,1,80);
                     toast.show();
+
                 }else {
                     // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
                     mCurrentIndex++;
@@ -161,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void checkAnswer(boolean b) {
-        boolean answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswerTrue();
+    private boolean checkAnswer(boolean b) {
+        answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswerTrue();
         int messageResId = 0;
         if (b == answerIsTrue){
             messageResId = R.string.correct;
@@ -172,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP,1,80);
         toast.show();
+        return answerIsTrue;
     }
 
     private void updateQuestion() {
@@ -187,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_INDEX, mCurrentIndex);
+        outState.putBoolean(KEY_FALSE,mFalseIsClicked);
+        outState.putBoolean(KEY_TRUE,mTrueIsClicked);
     }
 
     @Override
