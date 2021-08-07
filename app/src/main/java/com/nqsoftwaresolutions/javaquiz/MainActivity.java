@@ -46,17 +46,17 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"Activity Created....");
         setContentView(R.layout.activity_main);
 
-        // Todo Check last state of activity
-        if (savedInstanceState != null){
-            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
-        }
-
         //Todo set reference to widgets
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
         mNextImageButton = findViewById(R.id.id_img_btn_next);
         mPrevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
+
+        // Todo Check last state of activity
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
+        }
 
         updateQuestion();
 
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 mTrueButton.setClickable(false);
             }
         });
+
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void checkAnswer(boolean b) {
