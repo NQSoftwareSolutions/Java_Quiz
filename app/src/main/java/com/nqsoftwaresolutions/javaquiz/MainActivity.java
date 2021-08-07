@@ -64,8 +64,21 @@ public class MainActivity extends AppCompatActivity {
         mNextImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-               updateQuestion();
+                //Todo Check user is on last question or not
+                if (mCurrentIndex == 4){
+                    Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP,1,80);
+                    toast.show();
+                }else {
+                    // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                    mCurrentIndex++;
+                    updateQuestion();
+                    /**Todo Challenge 3.1 Prevent user from multiple answers
+                     * set clickable true
+                     */
+                    mFalseButton.setClickable(true);
+                    mTrueButton.setClickable(true);
+                }
             }
         });
 
@@ -77,12 +90,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
+                /**Todo Challenge 3.1 Prevent user from multiple answers
+                 * set clickable false
+                 */
+                mFalseButton.setClickable(false);
+                mTrueButton.setClickable(false);
             }
         });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
+                /**Todo Challenge 3.1 Prevent user from multiple answers
+                 * set clickable false
+                 */
+                mFalseButton.setClickable(false);
+                mTrueButton.setClickable(false);
             }
         });
 
@@ -94,8 +117,21 @@ public class MainActivity extends AppCompatActivity {
         mQuestionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-                updateQuestion();
+                //Todo Check user is on last question or not
+                if (mCurrentIndex == 4){
+                    Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP,1,80);
+                    toast.show();
+                }else {
+                    // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                    mCurrentIndex++;
+                    updateQuestion();
+                    /**Todo Challenge 3.1 Prevent user from multiple answers
+                     * set clickable true
+                     */
+                    mFalseButton.setClickable(true);
+                    mTrueButton.setClickable(true);
+                }
             }
         });
 
@@ -114,6 +150,11 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     mCurrentIndex = (mCurrentIndex - 1) % mQuestionsBank.length;
                     updateQuestion();
+                    /**Todo Challenge 3.1 Prevent user from multiple answers
+                     * set clickable false
+                     */
+                    mFalseButton.setClickable(false);
+                    mTrueButton.setClickable(false);
                 }
             }
         });
