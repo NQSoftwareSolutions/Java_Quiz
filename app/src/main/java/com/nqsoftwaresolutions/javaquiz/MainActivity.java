@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
+        Log.d(TAG, "Updating Question Text", new Exception());
         int question = mQuestionsBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
