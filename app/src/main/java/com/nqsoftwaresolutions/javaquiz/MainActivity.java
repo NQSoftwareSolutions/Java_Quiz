@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
                     // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-                    //mCurrentIndex++;
+                    mCurrentIndex++;
                     updateQuestion();
                     /**Todo Challenge 3.1 Prevent user from multiple answers
                      * set clickable true
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
-        Log.d(TAG, "Updating Question Text", new Exception());
+        //Log.d(TAG, "Updating Question Text", new Exception());
         int question = mQuestionsBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
