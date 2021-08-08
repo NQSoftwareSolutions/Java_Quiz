@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton = findViewById(R.id.id_btn_true);
         mNextImageButton = findViewById(R.id.id_img_btn_next);
         mPrevImageButton = findViewById(R.id.id_img_btn_pev);
-        //mQuestionTextView = findViewById(R.id.id_txt_question);
+        mQuestionTextView = findViewById(R.id.id_txt_question);
         mPercentageTextView = findViewById(R.id.id_txt_percentage);
         mRightAnswersTextView = findViewById(R.id.id_txt_right_answers);
         mWrongAnswersTextView = findViewById(R.id.id_txt_wrong_answers);
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }else {
                     // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-                    mCurrentIndex++;
+                    //mCurrentIndex++;
                     updateQuestion();
                     /**Todo Challenge 3.1 Prevent user from multiple answers
                      * set clickable true
