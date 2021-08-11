@@ -3,15 +3,19 @@ package com.nqsoftwaresolutions.javaquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nqsoftwaresolutions.javaquiz.data_model.Questions;
+
+import java.util.jar.Manifest;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -58,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
         ImageButton prevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
         mShowButton = findViewById(R.id.id_btn_show_ans);
+
+        //Todo create a listener on show button to go on cheat activity
+        mShowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startCheatActivity = new Intent(MainActivity.this, CheatActivity.class);
+                startActivity(startCheatActivity);
+            }
+        });
 
 
         // Todo Check last state of activity
