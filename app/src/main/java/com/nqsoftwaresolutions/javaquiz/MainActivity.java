@@ -4,24 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nqsoftwaresolutions.javaquiz.DataModel.Questions;
+import com.nqsoftwaresolutions.javaquiz.data_model.Questions;
 
 
 public class MainActivity extends AppCompatActivity {
 
     //Todo All global variables
     private Button mFalseButton, mTrueButton;
-    private ImageButton mNextImageButton, mPrevImageButton;
-    private TextView mQuestionTextView, mRightAnswersTextView, mWrongAnswersTextView, mPercentageTextView;
+    private TextView mQuestionTextView;
 
     private static final String TAG = "MainActivity";
 
@@ -30,22 +27,22 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_FALSE = "isFalse";
     private static final String KEY_TRUE = "isTrue";
 
-    private boolean answerIsTrue;
     private int mCurrentIndex = 0;
     private boolean mTrueIsClicked, mFalseIsClicked;
-    //Variables for storing percentage, right & wrong answers.
-    private int mPercentage, mRightAnsCounter, mWrongAnsCounter;
 
     /**
      * Create a question array
      */
-    private Questions[] mQuestionsBank = new Questions[]{
+    private final Questions[] mQuestionsBank = new Questions[]{
             new Questions(R.string.java_fundamentals,false),
             new Questions(R.string.java_fundamentals2,true),
             new Questions(R.string.java_fundamentals3,false),
             new Questions(R.string.java_fundamentals4,false),
             new Questions(R.string.java_fundamentals5,false)
     };
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +53,9 @@ public class MainActivity extends AppCompatActivity {
         //Todo set reference to widgets
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
-        mNextImageButton = findViewById(R.id.id_img_btn_next);
-        mPrevImageButton = findViewById(R.id.id_img_btn_pev);
+        ImageButton nextImageButton = findViewById(R.id.id_img_btn_next);
+        ImageButton prevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
-        mPercentageTextView = findViewById(R.id.id_txt_percentage);
-        mRightAnswersTextView = findViewById(R.id.id_txt_right_answers);
-        mWrongAnswersTextView = findViewById(R.id.id_txt_wrong_answers);
 
 
         // Todo Check last state of activity
@@ -70,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
             mTrueIsClicked = savedInstanceState.getBoolean(KEY_TRUE);
             mFalseIsClicked = savedInstanceState.getBoolean(KEY_FALSE);
             if (mTrueIsClicked || mFalseIsClicked){
-                /**Todo Challenge 3.1 Prevent user from multiple answers
-                 * set clickable true
+                /*Todo Challenge 3.1 Prevent user from multiple answers
+                  set clickable true
                  */
                 mFalseButton.setClickable(true);
                 mTrueButton.setClickable(true);
@@ -81,110 +75,92 @@ public class MainActivity extends AppCompatActivity {
         updateQuestion();
 
         //Todo update question & index with click
-        mNextImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Todo Check user is on last question or not
-                if (mCurrentIndex == 4){
-                    Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.TOP,1,80);
-                    toast.show();
+        nextImageButton.setOnClickListener(v -> {
+            //Todo Check user is on last question or not
+            if (mCurrentIndex == 4){
+                Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP,1,80);
+                toast.show();
 
-                }else {
-                    // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-                    mCurrentIndex++;
-                    updateQuestion();
-                    /**Todo Challenge 3.1 Prevent user from multiple answers
-                     * set clickable true
-                     */
-                    mFalseButton.setClickable(true);
-                    mTrueButton.setClickable(true);
-                }
+            }else {
+                // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                mCurrentIndex++;
+                updateQuestion();
+                mFalseButton.setClickable(true);
+                mTrueButton.setClickable(true);
             }
         });
 
-        /**
-         * Todo Challenge 1.1 customize Toast
-         * show Toast on top of the screen
+        /*
+          Todo Challenge 1.1 customize Toast
+          show Toast on top of the screen
          */
-        mTrueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer(true);
-                /**Todo Challenge 3.1 Prevent user from multiple answers
-                 * set clickable false
+        mTrueButton.setOnClickListener(v -> {
+            checkAnswer(true);
+            /*Todo Challenge 3.1 Prevent user from multiple answers
+              set clickable false
+             */
+            mFalseButton.setClickable(false);
+            mTrueButton.setClickable(false);
+        });
+
+        mFalseButton.setOnClickListener(v -> {
+            checkAnswer(false);
+            /*Todo Challenge 3.1 Prevent user from multiple answers
+             set clickable false
+             */
+            mFalseButton.setClickable(false);
+            mTrueButton.setClickable(false);
+        });
+
+        /*
+          Todo Challenge 2.1 set listener on TextView
+          we are going to create a event on Question text view so we can get next question
+          if we click on it
+         */
+        mQuestionTextView.setOnClickListener(v -> {
+            //Todo Check user is on last question or not
+            if (mCurrentIndex == 4){
+                Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP,1,80);
+                toast.show();
+            }else {
+                // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                mCurrentIndex++;
+                updateQuestion();
+                /*Todo Challenge 3.1 Prevent user from multiple answers
+                 set clickable true
+                 */
+                mFalseButton.setClickable(true);
+                mTrueButton.setClickable(true);
+            }
+        });
+
+        /*
+          Todo Challenge 2.2 set previous button
+          Create a new button & add listener on it
+          Update index & question in backward when clicked
+         */
+        prevImageButton.setOnClickListener(v -> {
+            if (mCurrentIndex == 0){
+                Toast toast = Toast.makeText(MainActivity.this, "Your are on first Question", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP,1,80);
+                toast.show();
+            }else {
+                mCurrentIndex = (mCurrentIndex - 1) % mQuestionsBank.length;
+                updateQuestion();
+                /*Todo Challenge 3.1 Prevent user from multiple answers
+                 set clickable false
                  */
                 mFalseButton.setClickable(false);
                 mTrueButton.setClickable(false);
-            }
-        });
-
-        mFalseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer(false);
-                /**Todo Challenge 3.1 Prevent user from multiple answers
-                 * set clickable false
-                 */
-                mFalseButton.setClickable(false);
-                mTrueButton.setClickable(false);
-            }
-        });
-
-        /**
-         * Todo Challenge 2.1 set listener on TextView
-         * we are going to create a event on Question text view so we can get next question
-         * if we click on it
-         */
-        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Todo Check user is on last question or not
-                if (mCurrentIndex == 4){
-                    Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.TOP,1,80);
-                    toast.show();
-                }else {
-                    // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-                    mCurrentIndex++;
-                    updateQuestion();
-                    /**Todo Challenge 3.1 Prevent user from multiple answers
-                     * set clickable true
-                     */
-                    mFalseButton.setClickable(true);
-                    mTrueButton.setClickable(true);
-                }
-            }
-        });
-
-        /**
-         * Todo Challenge 2.2 set previous button
-         * Create a new button & add listener on it
-         * Update index & question in backward when clicked
-         */
-        mPrevImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentIndex == 0){
-                    Toast toast = Toast.makeText(MainActivity.this, "Your are on first Question", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.TOP,1,80);
-                    toast.show();
-                }else {
-                    mCurrentIndex = (mCurrentIndex - 1) % mQuestionsBank.length;
-                    updateQuestion();
-                    /**Todo Challenge 3.1 Prevent user from multiple answers
-                     * set clickable false
-                     */
-                    mFalseButton.setClickable(false);
-                    mTrueButton.setClickable(false);
-                }
             }
         });
     }
 
-    private boolean checkAnswer(boolean b) {
-        answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswerTrue();
-        int messageResId = 0;
+    private void checkAnswer(boolean b) {
+        boolean answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswerTrue();
+        int messageResId;
         if (b == answerIsTrue){
             messageResId = R.string.correct;
         }else {
@@ -193,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP,1,80);
         toast.show();
-        return answerIsTrue;
     }
 
     private void updateQuestion() {

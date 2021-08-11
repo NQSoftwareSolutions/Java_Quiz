@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_back_24"
-            android:layout_marginRight="10dp"
-            />
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/todoImageButtonPrev" />
         <Button
             android:id="@+id/id_btn_true"
             android:layout_width="wrap_content"
@@ -50,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_forward_24"
-            android:layout_marginLeft="10dp"
-            />
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/todoImageButtonNext" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="310dp"

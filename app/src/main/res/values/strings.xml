@@ -4,11 +4,11 @@
     <string name="aFalse">False</string>
     <string name="correct">Correct</string>
     <string name="notCorrect">Not Correct</string>
-    <string name="next">Next</string>
     <string name="java_fundamentals"> Java is a low level programming language.</string>
     <string name="java_fundamentals2">Java is object oriented language</string>
     <string name="java_fundamentals3">Java is platform dependent language</string>
     <string name="java_fundamentals4">2 % 4 == 0</string>
     <string name="java_fundamentals5">Integer is data type in java</string>
-    <string name="previous">Prev</string>
+    <string name="todoImageButtonPrev">TODO</string>
+    <string name="todoImageButtonNext">TODO</string>
 </resources>
