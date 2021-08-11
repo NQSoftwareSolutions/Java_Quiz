@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo All global variables
     private Button mFalseButton, mTrueButton;
     private TextView mQuestionTextView;
+    private Button mShowButton;
 
     private static final String TAG = "MainActivity";
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton nextImageButton = findViewById(R.id.id_img_btn_next);
         ImageButton prevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
+        mShowButton = findViewById(R.id.id_btn_show_ans);
 
 
         // Todo Check last state of activity

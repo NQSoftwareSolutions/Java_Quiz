@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".CheatActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:text="@string/warning_txt"
+        android:textColor="@color/yellow"
+        android:background="@color/light_yellow"
+        />
+    <TextView
+        android:id="@+id/txt_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        tools:text="Answer"
+        android:layout_margin="5dp"
+        android:textColor="@color/blue"
+        android:background="@color/light_blue"
+        />
+    <Button
+        android:id="@+id/btn_show_ans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/show_ans_btn"
+        />
+
+</LinearLayout>

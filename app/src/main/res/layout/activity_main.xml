@@ -11,11 +11,11 @@
         android:id="@+id/id_txt_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="24dp"
-        android:layout_margin="5dp"
         android:textAlignment="center"
         android:textColor="@color/red"
         android:background="@color/light_red"
+        android:layout_margin="10dp"
+        android:padding="5dp"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,22 +27,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/aTrue"
-            android:layout_margin="5dp"
+            android:layout_marginEnd="5dp"
             tools:ignore="ButtonStyle" />
         <Button
             android:id="@+id/id_btn_false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/aFalse"
-            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="5dp"
-        android:padding="5dp"
+        android:layout_margin="10dp"
         >
         <TextView
             android:id="@+id/id_txt_wrong_answers"
@@ -81,20 +80,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         >
         <ImageButton
             android:id="@+id/id_img_btn_pev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_back_24"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="10dp"
             android:contentDescription="@string/todoImageButtonPrev" />
+        <Button
+            android:id="@+id/id_btn_show_ans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_ans_btn"
+            />
         <ImageButton
             android:id="@+id/id_img_btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_forward_24"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="10dp"
             android:contentDescription="@string/todoImageButtonNext" />
     </LinearLayout>
 </LinearLayout>

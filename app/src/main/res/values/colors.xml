@@ -11,7 +11,9 @@
     <color name="red">#B71C1C</color>
     <color name="blue">#1A237E</color>
     <color name="green">#1B5E20</color>
+    <color name="yellow">#F57F17</color>
     <color name="light_red">#FFCDD2</color>
     <color name="light_blue">#C5CAE9</color>
     <color name="light_green">#C8E6C9</color>
+    <color name="light_yellow">#FFF9C4</color>
 </resources>

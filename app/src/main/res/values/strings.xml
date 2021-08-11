@@ -1,14 +1,23 @@
 <resources>
     <string name="app_name">Java Quiz</string>
+    <!--Todo Buttons text -->
     <string name="aTrue">True</string>
     <string name="aFalse">False</string>
+    <!--Todo description of image buttons -->
+    <string name="todoImageButtonPrev">TODO This button will update question to previous one</string>
+    <string name="todoImageButtonNext">TODO This button will update question to next one</string>
+    <!--Todo Toast messages for main activity of quiz -->
     <string name="correct">Correct</string>
     <string name="notCorrect">Not Correct</string>
+    <!--Todo questions of quiz -->
     <string name="java_fundamentals"> Java is a low level programming language.</string>
     <string name="java_fundamentals2">Java is object oriented language</string>
     <string name="java_fundamentals3">Java is platform dependent language</string>
     <string name="java_fundamentals4">2 % 4 == 0</string>
     <string name="java_fundamentals5">Integer is data type in java</string>
-    <string name="todoImageButtonPrev">TODO</string>
-    <string name="todoImageButtonNext">TODO</string>
+    <!-- Todo String resources for second activity -->
+    <string name="warning_txt">Are you sure \n Do you want to do this!</string>
+    <string name="show_ans_btn">Show Answer</string>
+    <string name="cheat_txt">Cheat!</string>
+    <string name="judgement_msg">Cheating is Wrong</string>
 </resources>
