@@ -61,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
         mQuestionTextView = findViewById(R.id.id_txt_question);
         mPercentageTextView = findViewById(R.id.id_txt_percentage);
         mRightAnswersTextView = findViewById(R.id.id_txt_right_answers);
-        //casting error for debug purpose by LINT.
-        mWrongAnswersTextView = (TextView) findViewById(R.id.id_img_btn_next);
+        mWrongAnswersTextView = findViewById(R.id.id_txt_wrong_answers);
 
 
         // Todo Check last state of activity
