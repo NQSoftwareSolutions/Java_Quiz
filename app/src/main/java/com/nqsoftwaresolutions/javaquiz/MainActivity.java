@@ -201,8 +201,7 @@ public class MainActivity extends AppCompatActivity {
         mQuestionTextView.setText(question);
     }
 
-    /**
-     * Todo saving the state of activity
+    /**Todo saving the state of activity
      * override the onSaveInstanceState & onRestoreInstanceState
      */
     @Override
