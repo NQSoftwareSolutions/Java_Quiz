@@ -53,7 +53,7 @@
             android:contentDescription="@string/todoImageButtonNext" />
     </LinearLayout>
     <Button
-        android:id="@+id/id_btn_show_ans"
+        android:id="@+id/id_btn_show_ans_cheat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_ans_btn"

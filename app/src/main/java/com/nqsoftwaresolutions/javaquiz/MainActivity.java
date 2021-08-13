@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     //Todo All global variables
     private Button mFalseButton, mTrueButton;
     private TextView mQuestionTextView;
-    private Button mShowButton;
 
     private static final String TAG = "MainActivity";
+    private static final String EXTRA = "answer";
 
     //Global variable with key to store state or value, when activity recreated by android
     private static final String KEY_INDEX = "index";
@@ -61,13 +61,16 @@ public class MainActivity extends AppCompatActivity {
         ImageButton nextImageButton = findViewById(R.id.id_img_btn_next);
         ImageButton prevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
-        mShowButton = findViewById(R.id.id_btn_show_ans);
+        Button showAnswerButton = findViewById(R.id.id_btn_show_ans_cheat);
 
         //Todo create a listener on show button to go on cheat activity
-        mShowButton.setOnClickListener(new View.OnClickListener() {
+        showAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Todo Get the answer of current indexed question & send as extra value with intent
+                boolean correctAnswer = mQuestionsBank[mCurrentIndex].isAnswerTrue();
                 Intent startCheatActivity = new Intent(MainActivity.this, CheatActivity.class);
+                startCheatActivity.putExtra(EXTRA, correctAnswer);
                 startActivity(startCheatActivity);
             }
         });
