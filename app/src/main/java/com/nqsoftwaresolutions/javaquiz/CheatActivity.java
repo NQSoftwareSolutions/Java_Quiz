@@ -20,6 +20,7 @@ public class CheatActivity extends AppCompatActivity {
         TextView mShowAnswerTv = findViewById(R.id.id_txt_show_answer);
 
         mShowAnswerButton.setOnClickListener(v -> {
+            // Todo Get answer from intent & if it is true then set it on text view else false
             boolean answer = getIntent().getBooleanExtra(EXTRA, false);
             if (answer){
                 mShowAnswerTv.setText(R.string.aTrue);

@@ -1,8 +1,5 @@
 package com.nqsoftwaresolutions.javaquiz;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +10,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nqsoftwaresolutions.javaquiz.data_model.Questions;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.jar.Manifest;
+import com.nqsoftwaresolutions.javaquiz.data_model.Questions;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,18 +59,15 @@ public class MainActivity extends AppCompatActivity {
         ImageButton nextImageButton = findViewById(R.id.id_img_btn_next);
         ImageButton prevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
-        Button showAnswerButton = findViewById(R.id.id_btn_show_ans_cheat);
+        Button mShowAnswerButton = findViewById(R.id.id_btn_show_ans_cheat);
 
         //Todo create a listener on show button to go on cheat activity
-        showAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Todo Get the answer of current indexed question & send as extra value with intent
-                boolean correctAnswer = mQuestionsBank[mCurrentIndex].isAnswerTrue();
-                Intent startCheatActivity = new Intent(MainActivity.this, CheatActivity.class);
-                startCheatActivity.putExtra(EXTRA, correctAnswer);
-                startActivity(startCheatActivity);
-            }
+        mShowAnswerButton.setOnClickListener(v -> {
+            //Todo Get the answer of current indexed question & send as extra value with intent
+            boolean correctAnswer = mQuestionsBank[mCurrentIndex].isAnswerTrue();
+            Intent startCheatActivity = new Intent(MainActivity.this, CheatActivity.class);
+            startCheatActivity.putExtra(EXTRA, correctAnswer);
+            startActivity(startCheatActivity);
         });
 
 

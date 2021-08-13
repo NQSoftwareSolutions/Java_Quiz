@@ -17,7 +17,7 @@
     <string name="java_fundamentals5">Integer is data type in java</string>
     <!-- Todo String resources for second activity -->
     <string name="warning_txt">Are you sure \n Do you want to do this!</string>
-    <string name="show_ans_btn">Show Answer</string>
+    <string name="show_ans_btn">Cheat!</string>
     <string name="cheat_txt">Cheat!</string>
     <string name="judgement_msg">Cheating is Wrong</string>
 </resources>
