@@ -84,6 +84,7 @@ public class CheatActivity extends AppCompatActivity {
      *             & our minimum sdk is less then that
      *             if we didn't add
      *             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+     *             This code will applies on devices with API level 21 & greater
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void animateButton(View view) {
