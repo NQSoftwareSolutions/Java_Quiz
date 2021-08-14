@@ -1,13 +1,18 @@
 package com.nqsoftwaresolutions.javaquiz;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CheatActivity extends AppCompatActivity {
@@ -27,6 +32,7 @@ public class CheatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat);
 
         checkLastActivityState(savedInstanceState);
+
         Log.d(TAG,"Current Value of isCheated = "+isCheated);
 
         mShowAnswerTv = findViewById(R.id.id_txt_show_answer);
@@ -60,6 +66,7 @@ public class CheatActivity extends AppCompatActivity {
      *             Todo Get answer from intent & if it is true
      *              then set it on text view else false
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void cheatingButtonClicked(View view) {
         boolean answer = getIntent().getBooleanExtra(EXTRA, false);
         if (answer){
@@ -68,6 +75,35 @@ public class CheatActivity extends AppCompatActivity {
             mShowAnswerTv.setText(R.string.aFalse);
         }
         isCheated = setAnswerShownResult(true);
+        animateButton(view);
+    }
+
+    /**Todo Animate the button
+     * @param view button
+     *             this code will crash the app b/c animation is comes in version 21
+     *             & our minimum sdk is less then that
+     *             if we didn't add
+     *             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void animateButton(View view) {
+        int cx = view.getWidth() / 2;
+        int cy = view.getHeight() / 2;
+        float radius = view.getWidth();
+        Animator anim = ViewAnimationUtils.createCircularReveal(view,cx,cy,radius,0);
+        anim.addListener(new AnimatorListenerAdapter() {
+            /**
+             * {@inheritDoc}
+             *
+             * @param animation of button
+             */
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
+        anim.start();
     }
 
     /**Todo Save the state of activity to get last value of isCheated
