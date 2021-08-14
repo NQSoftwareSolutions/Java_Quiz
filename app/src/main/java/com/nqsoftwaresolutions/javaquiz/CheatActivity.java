@@ -2,6 +2,7 @@ package com.nqsoftwaresolutions.javaquiz;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,12 +15,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.BuildCompat;
 
 public class CheatActivity extends AppCompatActivity {
 
     private static final String EXTRA = "answer";
     private static final String RESULT_EXTRA = "Cheating";
     private TextView mShowAnswerTv;
+    private TextView mShowVersionTv;
     public static final String IS_CHEATED_KEY = "Cheat";
     private static final String TAG = "CheatActivity";
 
@@ -36,6 +39,25 @@ public class CheatActivity extends AppCompatActivity {
         Log.d(TAG,"Current Value of isCheated = "+isCheated);
 
         mShowAnswerTv = findViewById(R.id.id_txt_show_answer);
+        mShowVersionTv = findViewById(R.id.id_tv_show_version);
+        getDeviceConfiguration();
+
+    }
+
+    /**Todo get Device configurations & set on text view
+     * get  Device name
+     *      Device brand
+     *      API level
+     *      in variable & show on text view
+     */
+    private void getDeviceConfiguration() {
+        String mDeviceName = Build.DEVICE;
+        String mDeviceBrand = Build.BRAND;
+        String mDeviceVersion = Build.VERSION.SDK;
+        String stringAll = "Brand : "+mDeviceBrand + "" +
+                "\nDevice Name : "+ mDeviceName +""+
+                "\nDevice API Level: "+mDeviceVersion;
+        mShowVersionTv.setText(stringAll);
     }
 
     /**Todo set data for parent activity that user cheated or not
