@@ -22,22 +22,21 @@ import static com.nqsoftwaresolutions.javaquiz.CheatActivity.IS_CHEATED_KEY;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Todo All global variables
+    //Todo All global variables for views
     private Button mFalseButton, mTrueButton;
     private TextView mQuestionTextView;
-
-    private static final String TAG = "MainActivity";
-    private static final String EXTRA = "answer";
-    private static final int REQ_CODE_CHEAT = 0;
-
-    //Some constants which will be used in whole activity
-    private static final String KEY_INDEX = "index";
-    private static final String KEY_FALSE = "isFalse";
-    private static final String KEY_TRUE = "isTrue";
-
+    //Todo All java variables
     private int mCurrentIndex = 0;
     private boolean mTrueIsClicked, mFalseIsClicked;
     private boolean mIsCheater;
+
+    //Todo All Java Constants
+    private static final String TAG = "MainActivity";
+    private static final String EXTRA = "answer";
+    private static final int REQ_CODE_CHEAT = 0;
+    private static final String KEY_INDEX = "index";
+    private static final String KEY_FALSE = "isFalse";
+    private static final String KEY_TRUE = "isTrue";
 
     //Todo Questions
     private final Questions[] mQuestionsBank = new Questions[]{
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 mTrueButton.setClickable(true);
             }
         }
+
     }
 
     /**Todo Get results from Child Activity
@@ -140,8 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**Todo Save state of activity
      * @param outState state of application
-     *      This method will save the state of activity so when activity recreate, it will assign previous
-     *                 values to it.
+     *      This method will save the state of activity so when activity recreate,
+     *                it will assign previous values to it.
+     *                Todo Challenge 5.1 saving value of mIsCheater
      */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -232,6 +233,8 @@ public class MainActivity extends AppCompatActivity {
      *             Update index & question in backward when clicked
      *             Todo Challenge 3.1 Prevent user from multiple answers
      *             set clickable false
+     *             Todo Challenge 5.1 Closing loop holes for cheating
+     *             Make mIsCheater value same as it was when activity was created
      */
     public void prevButtonClicked(View view) {
         if (mCurrentIndex == 0){
@@ -250,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**Todo When Question Text view is pressed
      * @param view Text View
+     *             Make mIsCheater = false b/c user has not see upcoming answer,
+     *             he is cheated only current question
      *             Todo Check user is on last question or not
      *             Todo Challenge 2.1 set listener on TextView
      *             we are going to create a event on Question text view
@@ -258,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
      *             set clickable true
      */
     public void questionTextViewClicked(View view) {
+        mIsCheater = false;
         if (mCurrentIndex == 4) {
             Toast toast = Toast.makeText(MainActivity.this,
                     "Your are on last Question", Toast.LENGTH_SHORT);
@@ -273,7 +279,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**Todo When next button Clicked
      * @param view ImageButton
-     *             Make mIsCheater = false b/c user has not see upcoming answer, he is cheated only current question
+     *             Make mIsCheater = false b/c user has not see upcoming answer,
+     *             he is cheated only current question
      *             Todo Check user is on last question or not
      *             Todo update question & index with click
      */
