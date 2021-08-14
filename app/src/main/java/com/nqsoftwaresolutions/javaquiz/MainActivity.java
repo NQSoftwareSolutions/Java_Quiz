@@ -23,12 +23,13 @@ import static com.nqsoftwaresolutions.javaquiz.CheatActivity.IS_CHEATED_KEY;
 public class MainActivity extends AppCompatActivity {
 
     //Todo All global variables for views
-    private Button mFalseButton, mTrueButton;
-    private TextView mQuestionTextView;
+    private Button mFalseButton, mTrueButton, mCheatButton;
+    private TextView mQuestionTextView, mCheatingCounterTv;
     //Todo All java variables
     private int mCurrentIndex = 0;
     private boolean mTrueIsClicked, mFalseIsClicked;
     private boolean mIsCheater;
+    private int mCheatCounter;
 
     //Todo All Java Constants
     private static final String TAG = "MainActivity";
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_INDEX = "index";
     private static final String KEY_FALSE = "isFalse";
     private static final String KEY_TRUE = "isTrue";
+    private static final String KEY_CHEAT_COUNTER = "cheat counter";
 
     //Todo Questions
     private final Questions[] mQuestionsBank = new Questions[]{
@@ -57,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
         mQuestionTextView = findViewById(R.id.id_txt_question);
-
+        mCheatButton = findViewById(R.id.id_btn_show_ans_cheat);
+        mCheatingCounterTv = findViewById(R.id.id_tv_cheating_counter);
 
         checkLastActivityState(savedInstanceState);
-        Log.d(TAG,"Current Value of mIsCheated = "+mIsCheater);
 
         updateQuestion();
     }
@@ -71,11 +73,13 @@ public class MainActivity extends AppCompatActivity {
      *                           Todo Challenge 3.1 Prevent user from multiple answers
      *                           set clickable true
      * This method will get the last saved data from previous activity.
+     *                           Todo challenge 6.2 get last state of mCheatCounter
      */
     private void checkLastActivityState(Bundle savedInstanceState) {
         if (savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
             mIsCheater = savedInstanceState.getBoolean(IS_CHEATED_KEY);
+            mCheatCounter = savedInstanceState.getInt(KEY_CHEAT_COUNTER);
             mTrueIsClicked = savedInstanceState.getBoolean(KEY_TRUE);
             mFalseIsClicked = savedInstanceState.getBoolean(KEY_FALSE);
             if (mTrueIsClicked || mFalseIsClicked){
@@ -143,14 +147,16 @@ public class MainActivity extends AppCompatActivity {
      *      This method will save the state of activity so when activity recreate,
      *                it will assign previous values to it.
      *                Todo Challenge 5.1 saving value of mIsCheater
+     *                 Todo challenge 6.2 set last state of mCheatCounter
      */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_INDEX, mCurrentIndex);
         outState.putBoolean(IS_CHEATED_KEY, mIsCheater);
-        outState.putBoolean(KEY_FALSE,mFalseIsClicked);
-        outState.putBoolean(KEY_TRUE,mTrueIsClicked);
+        outState.putInt(KEY_CHEAT_COUNTER, mCheatCounter);
+        outState.putBoolean(KEY_FALSE, mFalseIsClicked);
+        outState.putBoolean(KEY_TRUE, mTrueIsClicked);
     }
 
     /**
@@ -307,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
      *             Todo not we want get result back from child activity that
      *             our user has cheated or not
      *             our user see the answer or not
+     *             Todo Challenge 6.1 update cheat counter & allow only 3
      *
      */
     public void showAnswerButtonClicked(View view) {
@@ -315,5 +322,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent(MainActivity.this, CheatActivity.class);
         startCheatActivity.putExtra(EXTRA, correctAnswer);
         startActivityForResult(startCheatActivity, REQ_CODE_CHEAT);
+        checkCheatCounter(view);
+    }
+
+    /**Todo Check mCheatCounter if it is 3 then make invisible to cheat button
+     *@param view button
+     * check mCheatCounter is < 3
+     * if yes then make an increment in it else make indivisible to button
+     */
+    private void checkCheatCounter(View view) {
+        if (mCheatCounter < 2){
+            mCheatCounter++;
+        }else {
+            view.setVisibility(View.INVISIBLE);
+        }
+        //mCheatingCounterTv.setText(mCheatCounter);
     }
 }

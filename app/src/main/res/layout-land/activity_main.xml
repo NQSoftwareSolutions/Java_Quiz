@@ -57,14 +57,29 @@
             android:onClick="nextButtonClicked"
             android:contentDescription="@string/todoImageButtonNext" />
     </LinearLayout>
-    <Button
-        android:id="@+id/id_btn_show_ans_cheat"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/show_ans_btn"
-        android:layout_margin="10dp"
-        android:onClick="showAnswerButtonClicked"
-        />
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/id_tv_cheating_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cheatingCounter"
+            android:background="@color/light_red"
+            android:textColor="@color/red"
+            />
+        <Button
+            android:id="@+id/id_btn_show_ans_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_ans_btn"
+            android:layout_margin="10dp"
+            android:onClick="showAnswerButtonClicked"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="310dp"
         android:layout_height="wrap_content"
