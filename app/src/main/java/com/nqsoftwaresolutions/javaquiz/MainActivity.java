@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nqsoftwaresolutions.javaquiz.data_model.Questions;
 
+import static com.nqsoftwaresolutions.javaquiz.CheatActivity.IS_CHEATED_KEY;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton = findViewById(R.id.id_btn_true);
         mQuestionTextView = findViewById(R.id.id_txt_question);
 
+
         checkLastActivityState(savedInstanceState);
+        Log.d(TAG,"Current Value of mIsCheated = "+mIsCheater);
 
         updateQuestion();
     }
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkLastActivityState(Bundle savedInstanceState) {
         if (savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
+            mIsCheater = savedInstanceState.getBoolean(IS_CHEATED_KEY);
             mTrueIsClicked = savedInstanceState.getBoolean(KEY_TRUE);
             mFalseIsClicked = savedInstanceState.getBoolean(KEY_FALSE);
             if (mTrueIsClicked || mFalseIsClicked){
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_INDEX, mCurrentIndex);
+        outState.putBoolean(IS_CHEATED_KEY, mIsCheater);
         outState.putBoolean(KEY_FALSE,mFalseIsClicked);
         outState.putBoolean(KEY_TRUE,mTrueIsClicked);
     }
@@ -162,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "Activity Resumed...");
+        Log.d(TAG,"Current Value of mIsCheated = "+mIsCheater);
     }
 
     /**

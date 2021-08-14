@@ -15,7 +15,7 @@ public class CheatActivity extends AppCompatActivity {
     private static final String EXTRA = "answer";
     private static final String RESULT_EXTRA = "Cheating";
     private TextView mShowAnswerTv;
-    private static final String IS_CHEATED_KEY = "Cheat";
+    public static final String IS_CHEATED_KEY = "Cheat";
     private static final String TAG = "CheatActivity";
 
     private boolean isCheated;
