@@ -1,5 +1,6 @@
 package com.nqsoftwaresolutions.javaquiz;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nqsoftwaresolutions.javaquiz.data_model.Questions;
@@ -24,14 +26,17 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final String EXTRA = "answer";
+    private static final int REQ_CODE_CHEAT = 0;
+    private static final String RESULT_EXTRA = "Cheating";
 
-    //Global variable with key to store state or value, when activity recreated by android
+    //Some constants which will be used in whole activity
     private static final String KEY_INDEX = "index";
     private static final String KEY_FALSE = "isFalse";
     private static final String KEY_TRUE = "isTrue";
 
     private int mCurrentIndex = 0;
     private boolean mTrueIsClicked, mFalseIsClicked;
+    private boolean mIsCheater;
 
     /**
      * Create a question array
@@ -64,10 +69,14 @@ public class MainActivity extends AppCompatActivity {
         //Todo create a listener on show button to go on cheat activity
         mShowAnswerButton.setOnClickListener(v -> {
             //Todo Get the answer of current indexed question & send as extra value with intent
+            /*Todo not we want get result back from child activity that
+             our user has cheated or not
+            our user see the answer or not
+            */
             boolean correctAnswer = mQuestionsBank[mCurrentIndex].isAnswerTrue();
             Intent startCheatActivity = new Intent(MainActivity.this, CheatActivity.class);
             startCheatActivity.putExtra(EXTRA, correctAnswer);
-            startActivity(startCheatActivity);
+            startActivityForResult(startCheatActivity, REQ_CODE_CHEAT);
         });
 
 
@@ -84,46 +93,23 @@ public class MainActivity extends AppCompatActivity {
                 mTrueButton.setClickable(true);
             }
         }
-
+        //Update question when activity created
         updateQuestion();
 
         //Todo update question & index with click
         nextImageButton.setOnClickListener(v -> {
+            mIsCheater = false;// b/c user has not see upcoming answer, he is cheated only current question
             //Todo Check user is on last question or not
             if (mCurrentIndex == 4){
                 Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP,1,80);
                 toast.show();
-
             }else {
-                // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
                 mCurrentIndex++;
                 updateQuestion();
                 mFalseButton.setClickable(true);
                 mTrueButton.setClickable(true);
             }
-        });
-
-        /*
-          Todo Challenge 1.1 customize Toast
-          show Toast on top of the screen
-         */
-        mTrueButton.setOnClickListener(v -> {
-            checkAnswer(true);
-            /*Todo Challenge 3.1 Prevent user from multiple answers
-              set clickable false
-             */
-            mFalseButton.setClickable(false);
-            mTrueButton.setClickable(false);
-        });
-
-        mFalseButton.setOnClickListener(v -> {
-            checkAnswer(false);
-            /*Todo Challenge 3.1 Prevent user from multiple answers
-             set clickable false
-             */
-            mFalseButton.setClickable(false);
-            mTrueButton.setClickable(false);
         });
 
         /*
@@ -171,27 +157,62 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * @param requestCode of child activity from which parent activity is receiving data
+     * @param resultCode send by chilled activity
+     * @param data Intent send by chilled with data
+     *             This method will get all of parameters & tell parent activity about chilled activity
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if (requestCode == REQ_CODE_CHEAT){
+            if (data == null){
+                return;
+            }else {
+                mIsCheater = CheatActivity.wasAnswerShown(data);
+            }
+        }
+    }
+
+    /**
+     * @param b provided answer
+     * this Method will check the answer or user that it is correct or not
+     */
     private void checkAnswer(boolean b) {
         boolean answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswerTrue();
         int messageResId;
-        if (b == answerIsTrue){
-            messageResId = R.string.correct;
-        }else {
-            messageResId = R.string.notCorrect;
+        if (mIsCheater){
+            messageResId = R.string.judgement_msg;
+        }else{
+            if (b == answerIsTrue){
+                messageResId = R.string.correct;
+            }else {
+                messageResId = R.string.notCorrect;
+            }
         }
-        Toast toast = Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP,1,80);
-        toast.show();
+
+        Toast mToast = Toast.makeText(MainActivity.this, messageResId, Toast.LENGTH_SHORT);
+        mToast.setGravity(Gravity.TOP,1,80);
+        mToast.show();
     }
 
+    /**
+     * This method will update question & set on text view
+     */
     private void updateQuestion() {
         //Log.d(TAG, "Updating Question Text", new Exception());
         int question = mQuestionsBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
 
-    /**Todo saving the state of activity
-     * override the onSaveInstanceState & onRestoreInstanceState
+    /**
+     * @param outState state of application
+     *      This method will save the state of activity so when activity recreate, it will assign previous
+     *                 values to it.
      */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -201,33 +222,74 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean(KEY_TRUE,mTrueIsClicked);
     }
 
+    /**
+     * This Method will called when OS will start the activity
+     */
     @Override
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "Activity Started...");
     }
 
+    /**
+     * This method will called when OS will resume the Activity
+     */
     @Override
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "Activity Resumed...");
     }
 
+    /**
+     * This method will called when OS pause the activity
+     */
     @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "Activity paused...");
     }
 
+    /**
+     * This method will called by OS when activity is stopped to work
+     */
     @Override
     protected void onStop() {
         super.onStop();
         Log.i(TAG,"Activity Stopped....");
     }
 
+    /**
+     * This method will called by OS when activity will be destroyed from memory
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG,"Activity Destroyed....");
+    }
+
+    /**
+     * @param view button view
+     *             this method will called when user clicks on true
+     *             Todo Challenge 1.1 customize Toast
+     *             show Toast on top of the screen
+     *             Todo Challenge 3.1 Prevent user from multiple answers
+     *             set clickable false
+     *
+     */
+    public void trueButtonClicked(View view) {
+        checkAnswer(true);
+        mFalseButton.setClickable(false);
+        mTrueButton.setClickable(false);
+    }
+
+    /**
+     * @param view of button
+     *             Todo Challenge 3.1 Prevent user from multiple answers
+     *             set clickable false
+     */
+    public void falseButtonClicked(View view) {
+        checkAnswer(false);
+        mFalseButton.setClickable(false);
+        mTrueButton.setClickable(false);
     }
 }

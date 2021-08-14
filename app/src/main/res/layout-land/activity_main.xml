@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/aTrue"
             android:layout_margin="5dp"
+            android:onClick="trueButtonClicked"
             />
         <Button
             android:id="@+id/id_btn_false"
@@ -43,6 +44,7 @@
             android:layout_height="wrap_content"
             android:text="@string/aFalse"
             android:layout_margin="5dp"
+            android:onClick="falseButtonClicked"
             />
         <ImageButton
             android:id="@+id/id_img_btn_next"
