@@ -15,6 +15,7 @@
         android:textColor="@color/red"
         android:background="@color/light_red"
         android:layout_margin="10dp"
+        android:onClick="questionTextViewClicked"
         android:padding="5dp"
         />
     <LinearLayout
@@ -90,12 +91,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_back_24"
             android:layout_marginEnd="10dp"
+            android:onClick="prevButtonClicked"
             android:contentDescription="@string/todoImageButtonPrev" />
         <Button
             android:id="@+id/id_btn_show_ans_cheat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/show_ans_btn"
+            android:onClick="showAnswerButtonClicked"
             />
         <ImageButton
             android:id="@+id/id_img_btn_next"
@@ -103,6 +106,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_forward_24"
             android:layout_marginStart="10dp"
+            android:onClick="nextButtonClicked"
             android:contentDescription="@string/todoImageButtonNext" />
     </LinearLayout>
 </LinearLayout>

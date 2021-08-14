@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String EXTRA = "answer";
     private static final int REQ_CODE_CHEAT = 0;
-    private static final String RESULT_EXTRA = "Cheating";
 
     //Some constants which will be used in whole activity
     private static final String KEY_INDEX = "index";
@@ -38,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mTrueIsClicked, mFalseIsClicked;
     private boolean mIsCheater;
 
-    /**
-     * Create a question array
-     */
+    //Todo Questions
     private final Questions[] mQuestionsBank = new Questions[]{
             new Questions(R.string.java_fundamentals,false),
             new Questions(R.string.java_fundamentals2,true),
@@ -48,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
             new Questions(R.string.java_fundamentals4,false),
             new Questions(R.string.java_fundamentals5,false)
     };
-
-    public MainActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,103 +55,33 @@ public class MainActivity extends AppCompatActivity {
         //Todo set reference to widgets
         mFalseButton = findViewById(R.id.id_btn_false);
         mTrueButton = findViewById(R.id.id_btn_true);
-        ImageButton nextImageButton = findViewById(R.id.id_img_btn_next);
-        ImageButton prevImageButton = findViewById(R.id.id_img_btn_pev);
         mQuestionTextView = findViewById(R.id.id_txt_question);
-        Button mShowAnswerButton = findViewById(R.id.id_btn_show_ans_cheat);
 
-        //Todo create a listener on show button to go on cheat activity
-        mShowAnswerButton.setOnClickListener(v -> {
-            //Todo Get the answer of current indexed question & send as extra value with intent
-            /*Todo not we want get result back from child activity that
-             our user has cheated or not
-            our user see the answer or not
-            */
-            boolean correctAnswer = mQuestionsBank[mCurrentIndex].isAnswerTrue();
-            Intent startCheatActivity = new Intent(MainActivity.this, CheatActivity.class);
-            startCheatActivity.putExtra(EXTRA, correctAnswer);
-            startActivityForResult(startCheatActivity, REQ_CODE_CHEAT);
-        });
+        checkLastActivityState(savedInstanceState);
 
+        updateQuestion();
+    }
 
-        // Todo Check last state of activity
+    /**Todo Check last state of activity
+     * @param savedInstanceState Bundle of values which saved
+     *                           when previous activity was stopped.
+     *                           Todo Challenge 3.1 Prevent user from multiple answers
+     *                           set clickable true
+     * This method will get the last saved data from previous activity.
+     */
+    private void checkLastActivityState(Bundle savedInstanceState) {
         if (savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX);
             mTrueIsClicked = savedInstanceState.getBoolean(KEY_TRUE);
             mFalseIsClicked = savedInstanceState.getBoolean(KEY_FALSE);
             if (mTrueIsClicked || mFalseIsClicked){
-                /*Todo Challenge 3.1 Prevent user from multiple answers
-                  set clickable true
-                 */
                 mFalseButton.setClickable(true);
                 mTrueButton.setClickable(true);
             }
         }
-        //Update question when activity created
-        updateQuestion();
-
-        //Todo update question & index with click
-        nextImageButton.setOnClickListener(v -> {
-            mIsCheater = false;// b/c user has not see upcoming answer, he is cheated only current question
-            //Todo Check user is on last question or not
-            if (mCurrentIndex == 4){
-                Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP,1,80);
-                toast.show();
-            }else {
-                mCurrentIndex++;
-                updateQuestion();
-                mFalseButton.setClickable(true);
-                mTrueButton.setClickable(true);
-            }
-        });
-
-        /*
-          Todo Challenge 2.1 set listener on TextView
-          we are going to create a event on Question text view so we can get next question
-          if we click on it
-         */
-        mQuestionTextView.setOnClickListener(v -> {
-            //Todo Check user is on last question or not
-            if (mCurrentIndex == 4){
-                Toast toast = Toast.makeText(MainActivity.this, "Your are on last Question", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP,1,80);
-                toast.show();
-            }else {
-                // mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
-                mCurrentIndex++;
-                updateQuestion();
-                /*Todo Challenge 3.1 Prevent user from multiple answers
-                 set clickable true
-                 */
-                mFalseButton.setClickable(true);
-                mTrueButton.setClickable(true);
-            }
-        });
-
-        /*
-          Todo Challenge 2.2 set previous button
-          Create a new button & add listener on it
-          Update index & question in backward when clicked
-         */
-        prevImageButton.setOnClickListener(v -> {
-            if (mCurrentIndex == 0){
-                Toast toast = Toast.makeText(MainActivity.this, "Your are on first Question", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP,1,80);
-                toast.show();
-            }else {
-                mCurrentIndex = (mCurrentIndex - 1) % mQuestionsBank.length;
-                updateQuestion();
-                /*Todo Challenge 3.1 Prevent user from multiple answers
-                 set clickable false
-                 */
-                mFalseButton.setClickable(false);
-                mTrueButton.setClickable(false);
-            }
-        });
     }
 
-    /**
+    /**Todo Get results from Child Activity
      * @param requestCode of child activity from which parent activity is receiving data
      * @param resultCode send by chilled activity
      * @param data Intent send by chilled with data
@@ -178,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
+    /**Todo Check Answer of question
      * @param b provided answer
      * this Method will check the answer or user that it is correct or not
      */
@@ -209,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         mQuestionTextView.setText(question);
     }
 
-    /**
+    /**Todo Save state of activity
      * @param outState state of application
      *      This method will save the state of activity so when activity recreate, it will assign previous
      *                 values to it.
@@ -267,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"Activity Destroyed....");
     }
 
-    /**
+    /**Todo When True button is pressed
      * @param view button view
      *             this method will called when user clicks on true
      *             Todo Challenge 1.1 customize Toast
@@ -282,8 +206,9 @@ public class MainActivity extends AppCompatActivity {
         mTrueButton.setClickable(false);
     }
 
-    /**
+    /**Todo When False button is pressed
      * @param view of button
+     *             this method will be called when user pressed on false button
      *             Todo Challenge 3.1 Prevent user from multiple answers
      *             set clickable false
      */
@@ -291,5 +216,90 @@ public class MainActivity extends AppCompatActivity {
         checkAnswer(false);
         mFalseButton.setClickable(false);
         mTrueButton.setClickable(false);
+    }
+
+    /**Todo when prev button is pressed
+     * @param view ImageButton
+     *             Todo Challenge 2.2 set previous button
+     *             Create a new button & add listener on it
+     *             Update index & question in backward when clicked
+     *             Todo Challenge 3.1 Prevent user from multiple answers
+     *             set clickable false
+     */
+    public void prevButtonClicked(View view) {
+        if (mCurrentIndex == 0){
+            Toast toast = Toast.makeText(MainActivity.this, "Your are on first Question", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP,1,80);
+            toast.show();
+        }else {
+            mCurrentIndex = (mCurrentIndex - 1) % mQuestionsBank.length;
+            updateQuestion();
+                /*
+                 */
+            mFalseButton.setClickable(false);
+            mTrueButton.setClickable(false);
+        }
+    }
+
+    /**Todo When Question Text view is pressed
+     * @param view Text View
+     *             Todo Check user is on last question or not
+     *             Todo Challenge 2.1 set listener on TextView
+     *             we are going to create a event on Question text view
+     *             so we can get next question if we click on it
+     *             Todo Challenge 3.1 Prevent user from multiple answers
+     *             set clickable true
+     */
+    public void questionTextViewClicked(View view) {
+        if (mCurrentIndex == 4) {
+            Toast toast = Toast.makeText(MainActivity.this,
+                    "Your are on last Question", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP, 1, 80);
+            toast.show();
+        } else {
+            mCurrentIndex++;
+            updateQuestion();
+            mFalseButton.setClickable(true);
+            mTrueButton.setClickable(true);
+        }
+    }
+
+    /**Todo When next button Clicked
+     * @param view ImageButton
+     *             Make mIsCheater = false b/c user has not see upcoming answer, he is cheated only current question
+     *             Todo Check user is on last question or not
+     *             Todo update question & index with click
+     */
+    public void nextButtonClicked(View view) {
+        mIsCheater = false;
+        if (mCurrentIndex == 4){
+            Toast toast = Toast.makeText(MainActivity.this,
+                    "Your are on last Question", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP,1,80);
+            toast.show();
+        }else {
+            mCurrentIndex++;
+            updateQuestion();
+            mFalseButton.setClickable(true);
+            mTrueButton.setClickable(true);
+        }
+    }
+
+    /**Todo when cheat button is clicked
+     * @param view button
+     *             Todo create a listener on show button to go on cheat activity
+     *             Todo Get the answer of current indexed question &
+     *               send as extra value with intent
+     *             Todo not we want get result back from child activity that
+     *             our user has cheated or not
+     *             our user see the answer or not
+     *
+     */
+    public void showAnswerButtonClicked(View view) {
+        boolean correctAnswer = mQuestionsBank[mCurrentIndex].isAnswerTrue();
+        Intent startCheatActivity = new
+                Intent(MainActivity.this, CheatActivity.class);
+        startCheatActivity.putExtra(EXTRA, correctAnswer);
+        startActivityForResult(startCheatActivity, REQ_CODE_CHEAT);
     }
 }
