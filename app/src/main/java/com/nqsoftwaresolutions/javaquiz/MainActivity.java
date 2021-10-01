@@ -336,6 +336,5 @@ public class MainActivity extends AppCompatActivity {
         }else {
             view.setVisibility(View.INVISIBLE);
         }
-        //mCheatingCounterTv.setText(mCheatCounter);
     }
 }
